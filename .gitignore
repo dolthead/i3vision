@@ -36,3 +36,5 @@ UserInterfaceState.xcuserstate
 resources/ios/
 resources/android/
 src/environment.ts
+
+*.md5
