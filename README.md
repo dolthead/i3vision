@@ -17,3 +17,4 @@ $ ionic cordova run ios
 
 Substitute android for ios, if desired.
 
+From Chris Betz' tutorial here: https://medium.com/@thechrisbetz/ionic-3-google-cloud-vision-firebase-78ea68cfbea8
