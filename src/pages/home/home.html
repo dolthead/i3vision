@@ -1,16 +1,30 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>i3Vision!</ion-title>
+    <ion-title>Ionic 3 Visionator!</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+<!-- <ion-content padding [virtualScroll]="items"> -->
   <ion-card *ngFor="let item of items | async">
+  <!-- <ion-card *virtualItem="let item"> -->
     <img [src]="'data:image/png;base64,' + item.imageData"/>
+    <!-- <ion-img [src]="'data:image/png;base64,' + item.imageData"></ion-img> -->
     <ion-card-content>
+      <!-- <p>{{item|json}}</p> -->
       <ion-list no-lines>
-        <ion-list-header>Labels</ion-list-header>
+
+        <!-- <ion-list-header>Labels</ion-list-header> -->
         <ion-item *ngFor="let label of item.results[0].labelAnnotations">{{label.description}}</ion-item>
+
+        <ion-item>
+          <!-- <span item-left>18 min</span>
+          <span item-left>(2.6 mi)</span> -->
+          <button color="light" ion-button icon-only item-end (click)="deleteEntry(item.$key)">
+            <ion-icon color="danger" name="trash"></ion-icon>
+          </button>
+        </ion-item>
+
       </ion-list>
     </ion-card-content>
   </ion-card>

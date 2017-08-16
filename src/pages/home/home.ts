@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+// import { NavController } from 'ionic-angular';
+import { AlertController, Content } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { GoogleCloudVisionServiceProvider } from '../../providers/google-cloud-vision-service/google-cloud-vision-service';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
@@ -13,17 +13,57 @@ export class HomePage {
 
   items: FirebaseListObservable<any[]>;
 
+  @ViewChild(Content) content: Content
+
   constructor(
     private camera: Camera,
     private vision: GoogleCloudVisionServiceProvider,
     private db: AngularFireDatabase,
-    private alert: AlertController) {
-      this.items = db.list('items');
+    private alert: AlertController
+  ) {}
+
+  ngOnInit() {
+    this.items = this.db.list('items');
+  }
+
+  ionViewWillEnter() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+        this.content.scrollToBottom(0);
+      }, 100);
+  }
+
+  deleteEntry(key) {
+    let alert = this.alert.create({
+      title: 'Delete Item',
+      message: 'Are you for sure?',
+      buttons: [
+        {
+          text: 'Dismiss',
+          role: 'cancel',
+          handler: () => {
+            // console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.db.object('/items/' + key).remove();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   saveResults(imageData, results) {
     this.items.push({ imageData: imageData, results: results})
-      .then(_ => { })
+      .then(() => { 
+        this.scrollToBottom();
+      })
       .catch(err => { this.showAlert(err) });
   }
 

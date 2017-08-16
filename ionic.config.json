@@ -1,6 +1,6 @@
 {
   "name": "i3vision",
-  "app_id": "best.i3vision",
+  "app_id": "com.simplybest.i3vision",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
